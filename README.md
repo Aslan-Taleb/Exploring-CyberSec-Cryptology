@@ -15,3 +15,26 @@ Python Scripts: I will publish the Python scripts I create while solving challen
 Revision Material: This repository will act as a revision resource for me. I'll organize the challenges, solutions, and cryptographic concepts in a way that will help me review and reinforce my understanding.
 
 Badges and Certifications: Whenever I earn badges or certifications from TryHackMe or CryptoHack, I'll proudly display them here. These achievements will serve as milestones in my learning journey.
+
+## Tools and Technologies 🐱‍💻
+Throughout my journey in exploring hacking and cryptography, I will be utilizing the following tools and technologies:
+
+## Hacking Platforms
+TryHackMe
+CryptoHack
+## Python Scripting and Automation
+Python 3
+## Cryptography
+Cryptographic Algorithms
+Encryption and Decryption Techniques
+## Network Analysis
+Wireshark
+## Cryptanalysis Tools
+Cryptool
+## Version Control
+Git
+GitHub
+
+---
+
+@Aslan-Taleb 🐱‍💻 2023
