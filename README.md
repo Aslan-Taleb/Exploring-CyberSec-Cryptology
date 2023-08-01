@@ -19,21 +19,15 @@ Badges and Certifications: Whenever I earn badges or certifications from TryHack
 ## Tools and Technologies 🐱‍💻
 Throughout my journey in exploring hacking and cryptography, I will be utilizing the following tools and technologies:
 
-## Hacking Platforms
-TryHackMe
-CryptoHack
-## Python Scripting and Automation
-Python 3
-## Cryptography
-Cryptographic Algorithms
-Encryption and Decryption Techniques
-## Network Analysis
-Wireshark
-## Cryptanalysis Tools
-Cryptool
-## Version Control
-Git
-GitHub
+- TryHackMe
+- CryptoHack
+- Python 3
+- Cryptographic Algorithms
+- Encryption and Decryption Techniques
+- Wireshark
+- Cryptool
+- Git
+- GitHub
 
 ---
 
