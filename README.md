@@ -21,9 +21,13 @@ Throughout my journey in exploring hacking and cryptography, I will be utilizing
 
 - TryHackMe
 - CryptoHack
+- Encryption and decryption techniques
+- Hash functions and digital signatures
 - Python 3
 - Cryptographic Algorithms
+- Online tools for frequency analysis and classical cryptography breaking
 - Encryption and Decryption Techniques
+- Hex editors for analyzing binary data.
 - Wireshark
 - Cryptool
 - Git
