@@ -1,12 +1,12 @@
 <p align="center">
-<img width="" src="https://media.giphy.com/media/KmHueA88mFABT9GkkR/giphy.gif" align="center" alt="gif" />
+<img width="400" src="https://media.giphy.com/media/KmHueA88mFABT9GkkR/giphy.gif" align="center" alt="gif" />
 <h1 align="center">Learning Hacking & Cryptologie 🐱‍💻 
 </h1>
 </p>
 
 Welcome to the Explore-Hack-Crypto repository! This repository will serve as my learning playground as I embark on my journey into the fascinating fields of hacking and cryptography. Over the next one or two months, I'll be starting my Master's program in Cryptology and Cyber Security at Cryptis, Limoges. This repository will be my hub for exploring the realms of hacking and cryptography.
 
-# Purpose
+# Purpose : 
 
 The primary purpose of this repository is to document and share my progress as I delve into the domains of hacking and cryptography. I will be using two platforms, TryHackMe and CryptoHack, to enhance my knowledge and skills in these areas. Here's what you can expect to find in this repository:
 
@@ -16,7 +16,7 @@ Revision Material: This repository will act as a revision resource for me. I'll 
 
 Badges and Certifications: Whenever I earn badges or certifications from TryHackMe or CryptoHack, I'll proudly display them here. These achievements will serve as milestones in my learning journey.
 
-## Tools and Technologies 🐱‍💻
+## Tools and Technologies : 
 Throughout my journey in exploring hacking and cryptography, I will be utilizing the following tools and technologies:
 
 - TryHackMe
