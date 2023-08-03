@@ -1,10 +1,10 @@
 <p align="center">
 <img width="400" src="https://media.giphy.com/media/KmHueA88mFABT9GkkR/giphy.gif" align="center" alt="gif" />
-<h1 align="center">Learning Hacking & Cryptologie 🐱‍💻 
+<h1 align="center">Exploring Cryptology and Cyber Security 🐱‍💻 
 </h1>
 </p>
 
-Welcome to the Explore-Hack-Crypto repository! This repository will serve as my learning playground as I embark on my journey into the fascinating fields of hacking and cryptography. Over the next one or two months, I'll be starting my Master's program in Cryptology and Cyber Security at Cryptis, Limoges. This repository will be my hub for exploring the realms of hacking and cryptography.
+Welcome to the Exploring-CyberSec-Cryptology repository! This repository will serve as my learning playground as I embark on my journey into the fascinating fields of hacking and cryptography. Over the next one or two months, I'll be starting my Master's program in Cryptology and Cyber Security at Cryptis, Limoges. This repository will be my hub for exploring the realms of hacking and cryptography.
 
 # Purpose : 
 
