@@ -1,0 +1,8 @@
+#we encrypt to bytes but it's not printable
+#so we use hex
+#so each letter we converted to ascii code
+#then the ascii to hex numbers
+
+hex_string = "63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d"
+flag = bytes.fromhex(hex_string)
+print(flag)
