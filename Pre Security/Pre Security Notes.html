@@ -1,137 +1,259 @@
-Intro To Cyber Security Notes
-    Intro to Offensive Security
-        First hack
-            we use the command gobuster
-                gobuster -u http://fakebank.com -w wordlist.txt dir
-                    -u is used to state the website we're scanning, -w takes a list of words to iterate through to find hidden pages.
-                    wordlist.txt is a text file that contains names of potentially hidden pages
-            so we find "/bank-transfer"
-        Different carrer in Cyber Security
-            Penetration Tester
-                testing technology products for finding exploitable security vulnerabilities
-            Red Teamer
-                Plays the role of an adversary, attacking an organization and providing feedback from an enemy's perspective.
-            Security Engineer
-                Design, monitor, and maintain security controls, networks, and systems to help prevent cyberattacks.
-    Intro to Defensive Security
-        Preventing intrusions from occurring
-        Detecting intrusions when they occur and responding properly
-        Blue teams are part of the defensive security landscape.
-        Tasks
-            User cyber security awareness
-            Documenting and managing assets
-            Updating and patching systems
-            Setting up preventative security devices
-                 firewall and intrusion prevention systems (IPS)
-            Setting up logging and monitoring devices
-                If a new unauthorized device appears on our network, we should be able to know.
-        Areas
-            Security Operations Center (SOC)
-                 team of cyber security professionals that monitors the network and its systems to detect malicious cyber security events
-                main areas of interest
-                    Vulnerabilities
-                    Policy violations
-                    Network intrusions
-                    Unauthorized activity
-            Threat Intelligence
-                aims to gather information to help the company better prepare against potential adversaries
-                Intelligence needs data. Data has to be collected, processed, and analyzed.
-                Learning about your adversaries allows you to know their tactics, techniques, and procedures. As a result of threat intelligence, we identify the threat actor (adversary), predict their activity, and consequently, we will be able to mitigate their attacks and prepare a response strategy.
-            Digital Forensics
-                the application of science to investigate crimes and establish facts.
-            Incident Response (DFIR)
-                Preparation
-                Detection and Analysis
-                Containment
-                Post-Incident Activity
-            Malware Analysis
-                Virus
-                Trojan Horse
-                Ransomware
-    Careers in Cyber
-        Security Analyst
-            constructing security measures across organisations to protect the company from attacks.
-         Security Engineer
-             develop and implement security solutions using threats and vulnerability data
-         Incident Responder
-            respond productively and efficiently to security breaches. Responsibilities include creating plans, policies, and protocols for organisations to enact during and following incidents
-        Red Teamer
-        Penetration Tester 
-        Malware Analyst
-    Web Application Security
-        a few formal categories from OWASP
-            Identification and Authentication Failure
-                Allowing the attacker to use brute force
-                Allowing the user to choose a weak password
-                Storing the users’ passwords in plain text
-            Broken Access Control
-                ensures that each user can only access files (documents, images, etc.) related to their role or work.
-            Injection
-                 insert malicious code as part of their input
-            Cryptographic Failures
-                Sending sensitive data in clear text
-                Relying on a weak cryptographic algorithm
-                Using default or weak keys for cryptographic functions
-    Operating System Security
-        When we talk about security, we should think of protecting three things
-            Confidentiality
-            Integrity
-            Availability
-        weaknesses targeted by malicious users
-            Authentication and Weak Passwords
-            Weak File Permissions
-            Access to Malicious Programs
+Pre Security Notes
+    Network Fundamentals
+        Indentifying Devices on a Network
+            IP Addresses (Internet Protocol)
+                there are two type public and private
+                A public address is used to identify the device on the Internet, whereas a private address is used to identify a device amongst other devices.
+                it's 4 octet (so 8bits * 4) (0-255)Internet Protocol addressing:
+                    IPV4 support 2^32 IP adresses
+                    IPV6 2^128
+                Subnets use IP addresses in three different ways:
+                    Identify the network address
+                    Identify the host address
+                    Identify the default gateway
+            MAC Addresses(Media Access Control)
+                physical network interface(which is a microchip board found on the device's motherboard)
+                it can be "spoofed":
+                    pretends to identify as another using its MAC address
+                 twelve-character hexadecimal number:
+                    split into two's and separated by a colon. These colons are considered separators. For example, __a4:c3:f0:85:ac:2d__. The first six characters represent the company that made the network interface, and the last six is a unique number.
+        Ping(ICMP)
+            fundamental network tools available
             
-        Some Practical
-            The accounts root and administrator have complete unrestricted access to a system.
-            we can use ssh USERNAME@MACHINE_IP to connect on another device
-            whoami to know who is the current user
-            history this command prints the commands used by the user.
-            su - root to switch to the root account
-    Network Security
-        Network security consists of different hardware and software solutions to achieve the set security goals
-        Examples of hardware appliances
-            Firewall appliance
-                The firewall allows and blocks connections based on a predefined set of rules. It restricts what can enter and what can leave a network.
-            Intrusion Detection System (IDS) appliance
-                An IDS detects system and network intrusions and intrusion attempts. It tries to detect attackers’ attempts to break into your network.
-            intrusion Prevention System (IPS)
-                An IPS blocks detected intrusions and intrusion attempts. It aims to prevent attackers from breaking into your network.
-            Virtual Private Network (VPN)
-         software security solutions.
-            Antivirus software
-            Host firewall
-        Attack Network Methodology
-            Recon
-            Weaponization
-            Delivery
-            Exploitation
-            Installation
-            Command & Control 
-            Actions on Objectives
-        PRACTICAL
-            We used nmap to learn about the running services.
-                FTP (File Transfer Protocol) wich sometimes we can connect as anonymous
-                    if it's work we can you get filename to dwnld files we want
-                    then we use exit or bye to quit
-            We connected to the FTP server to learn more about its configuration.
-            We discovered a file containing the root password mistakenly copied to a public folder.
-            We used the password we found, allowing us to log in successfully.
-            We gained access to all the users’ files.
-    Intro to Digital Forensics
-         the application of science to investigate crimes and establish facts.
-            Public-sector investigations refer to the investigations carried out by government and law enforcement agencies.
-            Private-sector investigations refer to the investigations carried out by corporate bodies by assigning a private investigator
-        Digital Forensics Process
-            Acquire the evidence
-            Establish a chain of custody
-            Place the evidence in a secure container
-        Practical
-            The Mission Was to
-                Our cat, Gado, has been kidnapped. The kidnapper has sent us a document with their requests (WE NEED TO GET IT BACK)
-            sudo apt install poppler-utils (go get pdfinfo)
-                pdfinfo DOCUMENT.pdf
-                    Creator,Date..ect
-                sudo apt install libimage-exiftool-perl (to get exiftool)
-                    exiftool IMAGE.jpg
-                        to get GPS information
+            Ping uses ICMP (Internet Control Message Protocol) packets to determine the performance of a connection between devices
+            commande : ping IP address or website URL
+        Local Area Network (LAN) 
+            different type of topology
+                Bus,Ring,Star
+            Switch
+                designed to aggregate multiple devices
+                keep track of what device is connected to which port
+                 can connect a large number of devices by having ports of 4, 8, 16, 24, 32, and 64 for devices to plug into.
+            Router
+                connect networks and pass data between them
+        Subnetting
+            splitting up a network into smaller
+            benefits:
+                Efficiency
+                Security
+                Full control
+            it's represented by a number called a subnet mask
+        ARP Protocol (Address Resolution Protocol)
+            responsible for allowing devices to identify themselves on a network.
+            allows a device to associate its MAC address with an IP address on the network. Each device on a network will keep a log of the MAC addresses associated with other devices.
+            When devices wish to communicate with another, they will send a broadcast to the entire network searching for the specific device. Devices can use the ARP protocol to find the MAC address (and therefore the physical identifier) of a device for communication.
+            In order to map these two identifiers together (IP address and MAC address), the ARP protocol sends two types of messages
+                ARP Request
+                ARP Reply
+            When an ARP request is sent, a message is broadcasted to every other device found on a network by the device, asking whether or not the device's MAC address matches the requested IP address. If the device does have the requested IP address, an ARP reply is returned to the initial device to acknowledge this. The initial device will now remember this and store it within its cache
+        DHCP Protocol (Dynamic Host Configuration Protocol)
+            When a device connects to a network, if it has not already been manually assigned an IP address, it sends out a request (DHCP Discover) to see if any DHCP servers are on the network. The DHCP server then replies back with an IP address the device could use (DHCP Offer). The device then sends a reply confirming it wants the offered IP Address (DHCP Request), and then lastly, the DHCP server sends a reply acknowledging this has been completed, and the device can start using the IP Address (DHCP ACK).
+        OSI Model (Open Systems Interconnection Model)
+            Application
+                how the user should interact with data sent or received.(the interface)
+            Presentation
+                standardisation
+                    This layer acts as a translator for data to and from the application layer (layer 7). The receiving computer will also understand data sent to a computer in one format destined for in another format.(
+            Session
+                synchronises the two computers to ensure that they are on the same page before data is sent and received
+            Transport
+                 vital part in transmitting data across a network
+                    use two protocol TCP and UDP
+                        TCP(The Transmission Control Protocol) 
+                            This protocol reserves a constant connection between the two devices 
+                            incorporates error checking
+                            guarantee that data sent from the small chunks in the session layer
+                            used for situations such as file sharing, internet browsing or sending an email
+                        UDP(User Datagram Protocol)
+                            no synchronisation between the two devices or guarantee
+                            useful in situations where there are small pieces of data being sent 
+                                for example ARP AND DHCP
+                            useful where it is okay if some part miss (video streaming)
+            Network
+                routing
+                    determines the most optimal path in which these chunks of data should be sent
+                    OSPF (Open Shortest Path First) and RIP (Routing Information Protocol). 
+                        The factors that decide what route is taken is path is the shortest most reliable faster physical connection
+                everything is dealt with via IP addresses
+                 Devices such as routers capable of delivering packets using IP addresses are known as Layer 3 devices — because they are capable of working at the third layer of the OSI model.
+            Data link
+                focuses on the physical addressing of the transmission
+                It receives a packet from the network layer (including the IP address for the remote computer) and adds in the physical MAC (Media Access Control) address of the receiving endpoint.
+                
+            Physical
+                physical components of the hardware used in networking and is the lowest layer that you will find. Devices use electrical signals to transfer data between each other in a binary numbering system (1's and 0's).
+        Packets and Frames
+            small pieces of data that, when forming together, make a larger piece of information or message.
+            Frame
+                A frame is at layer 2(data link) so no IP addresses
+            Packets
+                when we are talking about anything IP addresses, we are talking about packets
+                Packets are an efficient way of communicating data across networked
+                Packets have different structures that are dependant upon the type of packet that is being sent
+                A packet using this protocol will have a set of headers that contain additional pieces of information to the data that is being sent across a network.
+                    Time to Live,Source Address,Destination Address
+            TCP/IP(Transmission Control Protocol)
+                 TCP must establish a connection between both a client and a device acting as a server before data is sent.
+                guarantees that any data sent will be received on the other end
+                This process is named the Three-way handshake
+                    SYN,SYN/ACK,ACK
+        Ports
+            essential point in which data can be exchanged
+            Port Forwarding
+                
+        Firewall
+            determining what traffic is allowed to enter and exit
+            administrator can configure a firewall to permit or deny traffic based on factors
+                Where the traffic is coming from
+                Where is the traffic going to
+                What protocol is the traffic using
+            Firewalls perform packet inspection to determine the answers
+        VPN(Virtual Private Network)
+    How The Web Works
+        DNS(Domain Name System)
+            a simple way for us to communicate with devices on the internet without remembering complex numbers
+            What happens when you make a DNS request
+                your computer first checks its local cache to see if you've previously looked up the address recently
+                A Recursive DNS Server is called(This server also has a local cache of recently looked up domain names.)
+                    If a result is found locally, this is sent back to your computer
+                 If the request cannot be found locally, a journey begins to find the correct answer, starting with the internet's root DNS servers.
+            instead of remembering 104.26.10.229, you can remember tryhackme.com instead.
+        HTTP
+            (rules used for communicating with web servers for the transmitting of webpage data, whether that is HTML, Images, Videos, etc.)
+            HTTPS is the secure version of HTTP. HTTPS data is encrypted so it not only stops people from seeing the data you are receiving and sending, but it also gives you assurances that you're talking to the correct web server and not something impersonating it.
+            Methods
+                GET Request
+                POST Request
+                PUT Request
+                DELETE Request
+            Status Code
+                100-199 - Information Response
+                200-299 - Success
+                300-399 - Redirection
+                400-499 - Client Errors
+                500-599 - Server Errors
+        URL(Uniform Resource Locator)
+            instruction on how to access a resource on the internet
+            Structure of an URL
+                Scheme
+                    This instructs on what protocol to use for accessing the resource such as HTTP, HTTPS, FTP (File Transfer Protocol).
+                User
+                    Some services require authentication to log in, you can put a username and password into the URL to log in.
+                Host
+                    The domain name or IP address of the server you wish to access.
+                Port
+                     The Port that you are going to connect to, usually 80 for HTTP and 443 for HTTPS, but this can be hosted on any port between 1 - 65535.
+                Path
+                    The file name or location of the resource you are trying to access.
+                Query String
+                    Extra bits of information that can be sent to the requested path. For example, /blog?id=1 would tell the blog path that you wish to receive the blog article with the id of 1.
+                Fragment
+                    Extra bits of information that can be sent to the requested path. For example, /blog?id=1 would tell the blog path that you wish to receive the blog article with the id of 1.
+        Making a Request
+            It's possible to make a request to a web server with just one line "GET / HTTP/1.1",But for a much richer web experience, you’ll need to send other data as well. This other data is sent in what is called headers.
+            Example : 
+                 GET / HTTP/1.1
+                    This request is sending the GET method ( more on this in the HTTP Methods task ), request the home page with / and telling the web server we are using HTTP protocol version 1.1.
+                Host: tryhackme.com
+                    We tell the web server we want the website tryhackme.com
+                User-Agent: Mozilla/5.0 Firefox/87.0
+                    We tell the web server we are using the Firefox version 87 Browser
+                Referer: https://tryhackme.com/
+                    We are telling the web server that the web page that referred us to this one is [https://tryhackme.com](https://tryhackme.com/)
+        Cookies
+            small piece of data that is stored on your computer. Cookies are saved when you receive a "Set-Cookie" header from a web server. Then every further request you make, you'll send the cookie data back to the web server. Because HTTP is stateless (doesn't keep track of your previous requests), cookies can be used to remind the web server who you are, some personal settings for the website or whether you've been to the website before
+            Cookies can be used for many purposes but are most commonly used for website authentication
+    Linux Fundamentals
+        SSH(Secure Shell)
+            ssh tryhackme@MACHINE_IP
+            protocol between devices in an encrypted form
+             remotely execute commands on another device remotely
+            ny data sent between the devices is encrypted when it is sent over a network
+        su (to switch user)
+            su user2
+        wget (to download files)
+            wget https://assets.tryhackme.com/additional/linux-fundamentals/part3/myfile.txt
+        SCP(Secure copy)
+            allows you to
+                Copy files & directories from your current system to a remote system
+                Copy files & directories from a remote system to your current system
+            the format of SCP is just SOURCE and DESTINATION
+                scp important.txt ubuntu@192.168.1.30:/home/ubuntu/transferred.txt
+                scp ubuntu@192.168.1.30:/home/ubuntu/documents.txt notes.txt 
+        Serving Files From Your Host - WEB
+            we can start a server
+                python3 -m  http.server
+            using wget we can get the file we want
+                wget http://127.0.0.1:8000/file
+        Processes
+            provide a list of the running processes 
+                ps
+            we can see processes run by other users and those that don't run from a session
+                ps aux
+            real-time statistics about the processes running on your system instead of a one-time view
+                top
+            Managing Processes
+                we can kill a process
+                    kill 1337
+                we can do many things to a process
+                    systemctl start apache2
+                    we can replace start by
+                        Start
+                        Stop
+                        Enable
+                        Disable
+            Backgrounding and Foregrounding
+                using "&" we can make a process on the background or we can use "Ctrl + Z"
+                    great for commands such as copying files because it means that we can run the command in the background and continue on with whatever further commands we wish to execute
+                we can bring to foreground by using "fg"
+        Automation
+            using cron process
+                A crontab is simply a special file with formatting that is recognised by the cron process to execute each line step-by-step.
+                responsible for facilitating and managing cron jobs
+                more specifcly crontabs
+        Logs
+            Located in the /var/log directory, these files and folders contain logging information for applications and services running on your system
+            a great way in monitoring the health of your system and protecting it
+    Windows Fundamentals
+        The File System
+            the New Technology File System or simply [NTFS]
+                NTFS is known as a journaling file system. In case of a failure, the file system can automatically repair the folders/files on disk using information stored in a log file.
+                 you can set permissions .
+                    The permissions are:
+                        Full control
+                        Modify
+                        Read & Execute
+                        List folder contents
+                        Read
+                        Write
+            Before NTFS, there was FAT16/FAT32
+                still see FAT partitions in use today. For example, you typically see FAT partitions in USB devices, MicroSD cards
+            System32 folder
+                holds the important files that are critical for the operating system
+                Accidentally deleting any files or folders within System32 can render the Windows OS inoperational
+        Local User and Group Management
+            on run type "lusrmgr.msc" to get it
+        User Account Control
+            When a user with an account type of administrator logs into a system, the current session doesn't run with elevated permissions. When an operation requiring higher-level privileges needs to execute, the user will be prompted to confirm if they permit the operation to run.
+        Computer Management
+            "compmgmt.msc" on run to get it
+            Event Viewer
+                view events that have occurred on the computer. These records of events can be seen as an audit trail that can be used to understand the activity of the computer system. This information is often used to diagnose problems and investigate actions executed on the system. 
+            Shared Folders
+                
+        System Configuartion
+            this tool gathers information about your computer and displays a comprehensive view of your hardware, system components, and software environment, which you can use to diagnose computer issues.
+            Hardware Resources
+                pecific information about the hardware devices installed on the computer
+            Components
+            Software Environment
+                specific information about the hardware devices installed on the computer
+            Monitor 
+                resmon.exe
+                displays per-process and aggregate CPU, memory, disk, and network usage information
+            cmd
+                it's the terminal 
+                    example of command : ipconfig,whoami , hostname
+            Register Editor
+                a central hierarchical database used to store information necessary to configure the system for one or more users, applications, and hardware devices.
+                command "reregedit"
