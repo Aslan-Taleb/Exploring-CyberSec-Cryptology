@@ -16,6 +16,16 @@ Projects and More: Beyond network-related content, this repository showcases var
 
 Achievements and Certifications: As I achieve badges or certifications throughout my Master's program, I proudly display them here, marking significant milestones in my remarkable learning journey.
 
+## Certifications:
+
+- TryHackMe Introduction To Cyber Security Certification
+  ![TryHackMe Introduction To Cyber Security Certification](https://raw.githubusercontent.com/Aslan-Taleb/Exploring-CyberSec-Cryptology/main/TryHackMe/Introduction%20To%20Cyber%20Security/Certification.png)
+
+- TryHackMe Pre Security Certification
+  ![TryHackMe Pre Security Certification](https://raw.githubusercontent.com/Aslan-Taleb/Exploring-CyberSec-Cryptology/main/TryHackMe/Pre%20Security/Certification.png)
+
+
+
 ## Tools and Technologies : 
 As I progress through my Master's program in Cybersecurity, I will utilize a comprehensive set of tools and technologies essential for this field, including:
 
