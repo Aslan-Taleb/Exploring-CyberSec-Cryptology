@@ -22,7 +22,7 @@ Achievements and Certifications: As I achieve badges or certifications throughou
   ![TryHackMe Introduction To Cyber Security Certification](TryHackMe/Introduction%20To%20Cyber%20Security/Certification.png)
 
 - TryHackMe Pre Security Certification
-  ![TryHackMe Pre Security Certification](Exploring-CyberSec-Cryptology/main/TryHackMe/Pre%20Security/Certification.png)
+  ![TryHackMe Pre Security Certification](TryHackMe/Pre%20Security/Certification.png)
 
 
 
