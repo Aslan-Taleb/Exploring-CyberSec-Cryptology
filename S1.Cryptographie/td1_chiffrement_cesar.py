@@ -6,7 +6,7 @@ text_rot13 = "PRFNE INVAPEN"
 crypted = ""
 
 # Clé de décalage pour le chiffrement de César
-key = 13
+key = -3
 
 # Boucle à travers chaque caractère dans le texte d'entrée
 for letter in text:

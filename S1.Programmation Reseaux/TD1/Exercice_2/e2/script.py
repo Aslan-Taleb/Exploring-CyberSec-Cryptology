@@ -25,3 +25,11 @@ def main():
             print(f"Première ligne de {fichier}: {first_line}")
 
 main()
+
+# import sys,subprocess
+# #PIPE pour dire la sortie de la commande 
+# resultat_commande = subprocess.run("dir /a",shell=True,stdout=subprocess.PIPE)
+# sortie_commande = resultat_commande.stdout
+# liste_fichiers = sortie_commande.splitlines()
+# for i in liste_fichiers:
+#     print(i)

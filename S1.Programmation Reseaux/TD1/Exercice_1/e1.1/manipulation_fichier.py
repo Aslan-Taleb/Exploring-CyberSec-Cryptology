@@ -4,13 +4,17 @@
 lines_number = 0
 
 # Nom du fichier à ouvrir
-filename = "e1/test.txt"
+filename = r"TD1/Exercice_1/e1.1/test.txt"
 
 try:
     # Ouvrir le fichier en mode lecture binaire ("rb") avec une gestion de contexte (with)
     with open(filename, "rb") as file:
         # Parcourir chaque ligne dans le fichier
-        for line in file:
+        # utiliser while ca nous aidera en reseau
+        while 1:
+            line = file.readline()
+            if not line:
+                break
             # Incrémenter le compteur de lignes
             lines_number += 1
 
