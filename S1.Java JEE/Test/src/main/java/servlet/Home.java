@@ -1,19 +1,15 @@
-package com.example.dossier;
+package servlet;
 
 import java.io.*;
 
+import beans.Prof;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet()
-public class leTest extends HttpServlet {
-    private String message;
 
-    public void init() {
-        message = "Hi ! \nThis is my first servlet!\n";
-    }
-
+@WebServlet("/Home")
+public class Home extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         /*
         version des tipeu
@@ -26,6 +22,20 @@ public class leTest extends HttpServlet {
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
         */
+        String name = request.getParameter("name");
+        if (name == null){
+            name = "World";
+        }
+        request.setAttribute("welcomeMessage","Hello " + name +" ! ");
+        String [] modules = {"IA","Programmation Reseaux","Java EE"};
+        request.setAttribute("modules",modules);
+        Prof EC = new Prof();
+        EC.setNom("Conchon");
+        EC.setPrenom("Emmanuel");
+        EC.setEmail("EmmanuelConchon@gmail.com");
+        EC.setActif(true);
+        request.setAttribute("profJEE",EC);
+
         this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 
     }
