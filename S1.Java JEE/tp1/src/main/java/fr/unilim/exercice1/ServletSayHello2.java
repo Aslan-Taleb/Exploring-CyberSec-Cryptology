@@ -13,6 +13,6 @@ public class ServletSayHello2 extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         response.getWriter().println("<h1>Hello World ! </h1>");
-        response.getWriter().println("<a href=\"/home\">Get Back</a>");
+        response.getWriter().println("<a href=\"/\">Get Back</a>");
     }
 }

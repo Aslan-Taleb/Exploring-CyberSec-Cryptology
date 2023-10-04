@@ -29,7 +29,7 @@ public class ServletCountWithUser extends HttpServlet {
         out.println("<body>");
         out.println("<h1>Here We Count With Users</h1>");
         out.println("<p>L'utilisateur <strong>" + ID + "</strong> nous a contactés <strong>" + count + " fois</strong>.</p>");
-        out.println("<a href=\"/home\">Get Back</a>");
+        out.println("<a href=\"/\">Get Back</a>");
         out.println("</body>");
         out.println("</html>");
         out.close();

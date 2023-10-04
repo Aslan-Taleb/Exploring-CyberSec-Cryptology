@@ -32,12 +32,6 @@ public class AnnuaireServlet extends HttpServlet {
         // Access the ServletContext and retrieve the "accounts" attribute
         ServletContext servletContext = getServletContext();
         accounts = (HashMap<String, String>) servletContext.getAttribute("accounts");
-
-        if (accounts == null) {
-            // If the "accounts" attribute is not initialized, create a new HashMap
-            accounts = new HashMap<>();
-            servletContext.setAttribute("accounts", accounts);
-        }
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException {
@@ -76,7 +70,8 @@ public class AnnuaireServlet extends HttpServlet {
             out.println(" <p>Account with name <strong>" + nameToDelete + "</strong> has been deleted.</p>");
         }
         out.println(accountHtml);
-        out.println("<a href=\"/home\">Get Back</a>");
+        out.println("<a href=\"/login\">logout</a>");
+        out.println("<a href=\"/\">Get Back</a>");
         out.println("</body></html>");
 
     }
@@ -88,20 +83,6 @@ public class AnnuaireServlet extends HttpServlet {
         String password = request.getParameter("password");
         // Add the account to the HashMap
         accounts.put(name, password);
-//        // Check if the "logout" parameter is present in the URL
-//        String logout = request.getParameter("logout");
-//        if (Objects.equals(logout, "true")) {
-//            // Invalidate the session to log the user out
-//            HttpSession session = request.getSession(false);
-//            System.out.println("AAAAH");
-//            if (session != null) {
-//                ((HttpSession) session).invalidate();
-//            }
-//            // Redirect to the login page or any other appropriate page
-//            response.sendRedirect(request.getContextPath() + "/login.html");
-//            return;
-//        }
-        // Forward to doGet after processing
         doGet(request, response);
     }
 }

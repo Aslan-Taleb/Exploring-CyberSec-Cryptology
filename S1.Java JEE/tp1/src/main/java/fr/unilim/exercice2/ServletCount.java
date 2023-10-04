@@ -17,6 +17,6 @@ public class ServletCount extends HttpServlet {
         response.getWriter().println("<h1>Here We Count</h1>");
         count++;
         response.getWriter().println(count);
-        response.getWriter().println("<a href=\"/home\">Get Back</a>");
+        response.getWriter().println("<a href=\"/\">Get Back</a>");
     }
 }
