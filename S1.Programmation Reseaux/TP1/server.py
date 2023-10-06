@@ -47,6 +47,7 @@ def start():
     while True:
         # For each connection, we retrieve the connection object and connection information
         conn, addr = socket_server.accept()
+        print(f"conn : {conn} addr : {addr}")
         # Create a thread to handle the connection and pass it to our handle_client function with the arguments
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
