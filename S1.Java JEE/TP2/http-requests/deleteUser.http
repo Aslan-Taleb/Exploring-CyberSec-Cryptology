@@ -1,0 +1,3 @@
+# Supprimer un utilisateur
+DELETE http://localhost:8080/api/delete?login=aslan
+Content-Type: application/json

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Documentation de l'API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        p {
+            font-size: 16px;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Documentation de l'API</h1>
+
+<h2>GET /api/users</h2>
+<p>Récupère la liste des utilisateurs de l'annuaire.</p>
+<div class="code-block">
+    GET http://localhost:8080/api/users
+</div>
+
+<h2>POST /api/add</h2>
+<p>Ajoute un nouvel utilisateur à l'annuaire.</p>
+<p>Exemple de requête :</p>
+<div class="code-block">
+    POST http://localhost:8080/api/add
+    Content-Type: application/json
+
+    {
+    "login": "nouvel_utilisateur",
+    "password": "mot_de_passe"
+    }
+</div>
+
+<h2>POST /api/authenticate</h2>
+<p>Authentifie un utilisateur avec un login et un mot de passe.</p>
+<p>Exemple de requête :</p>
+<div class="code-block">
+    POST http://localhost:8080/api/authenticate
+    Content-Type: application/json
+
+    {
+    "login": "utilisateur",
+    "password": "mot_de_passe"
+    }
+</div>
+
+<h2>DELETE /api/delete</h2>
+<p>Supprime un utilisateur de l'annuaire.</p>
+<p>Exemple de requête :</p>
+<div class="code-block">
+    DELETE http://localhost:8080/api/delete?login=utilisateur
+    Content-Type: application/json
+</div>
+
+<h2>POST /api/logout</h2>
+<p>Déconnecte un utilisateur en invalidant sa session.</p>
+<div class="code-block">
+    POST http://localhost:8080/api/logout
+</div>
+</body>
+</html>
