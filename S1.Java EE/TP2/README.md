@@ -1,68 +1,58 @@
-# tp2
+# Annuaire API
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+The Annuaire API is a simple REST API for managing users in a directory. It allows you to add, delete, and authenticate users.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Usage
 
-## Running the application in dev mode
+To use this API, you can send HTTP requests to the appropriate endpoints.
 
-You can run your application in dev mode that enables live coding using:
+### Endpoints
 
-```shell script
-./gradlew quarkusDev
-```
+#### Get the list of users
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+```http
+GET http://localhost:8080/api/users
 
-## Packaging and running the application
+This endpoint will return the list of user names in the directory.
 
-The application can be packaged using:
+Add a user
 
-```shell script
-./gradlew build
-```
+POST http://localhost:8080/api/add
+Content-Type: application/json
 
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+{
+  "login": "new_user",
+  "password": "password"
+}
 
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
+This endpoint allows you to add a new user to the directory by providing their username and password.
 
-If you want to build an _über-jar_, execute the following command:
+Authentication
 
-```shell script
-./gradlew build -Dquarkus.package.type=uber-jar
-```
+POST http://localhost:8080/api/authenticate
+Content-Type: application/json
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
+{
+  "login": "user",
+  "password": "password"
+}
 
-## Creating a native executable
+This endpoint allows you to authenticate a user by checking their username and password. If authentication succeeds, the user receives an authentication token.
 
-You can create a native executable using:
+Delete a user
 
-```shell script
-./gradlew build -Dquarkus.package.type=native
-```
+DELETE http://localhost:8080/api/delete?login=user
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+This endpoint allows you to delete a user from the directory by providing their username.
 
-```shell script
-./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
-```
+Logout
 
-You can then execute your native executable with: `./build/tp2-1.0-SNAPSHOT-runner`
+POST http://localhost:8080/api/logout
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
+This endpoint allows you to log out a user by invalidating their session.
 
-## Related Guides
+Running the API
+To run the API, you can deploy the application to your preferred Jakarta EE server. You will also need to configure a database server to store users.
 
-- RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A Jakarta REST implementation utilizing
-  build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the
-  extensions that depend on it.
-
-## Provided Code
-
-### RESTEasy Reactive
-
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+Configuration
+The API configuration can be found in the META-INF/persistence.xml file. You will need to configure the data source (DataSource) for your database in this file.
