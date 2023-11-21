@@ -1,0 +1,107 @@
+#include <zephyr/kernel.h>
+#include <zephyr/sys/printk.h>
+#include <zephyr/drivers/display.h>
+#include <string.h>
+
+#define PIXEL_BIT(idx, val) (val ? BIT(idx) : 0)
+#define PIXEL_MASK(...)     (FOR_EACH_IDX(PIXEL_BIT, (|), __VA_ARGS__))
+
+#define WIDTH  5
+#define HEIGHT 5
+
+static struct display_capabilities caps;
+static uint8_t buf[WIDTH];
+static const struct display_buffer_descriptor buf_desc = {
+    .buf_size = sizeof(buf),
+    .width = WIDTH,
+    .height = HEIGHT,
+    .pitch = 8,
+};
+
+static const uint8_t letter_A[HEIGHT] = {PIXEL_MASK(0, 1, 1, 1, 0), PIXEL_MASK(1, 0, 0, 0, 1),
+                                         PIXEL_MASK(1, 1, 1, 1, 1), PIXEL_MASK(1, 0, 0, 0, 1),
+                                         PIXEL_MASK(1, 0, 0, 0, 1)};
+
+static const uint8_t letter_S[HEIGHT] = {PIXEL_MASK(1, 1, 1, 1, 1), PIXEL_MASK(1, 0, 0, 0, 1),
+                                         PIXEL_MASK(1, 1, 1, 1, 1), PIXEL_MASK(0, 0, 0, 0, 1),
+                                         PIXEL_MASK(1, 1, 1, 1, 1)};
+
+static const uint8_t letter_L[HEIGHT] = {PIXEL_MASK(1, 0, 0, 0, 0), PIXEL_MASK(1, 0, 0, 0, 0),
+                                         PIXEL_MASK(1, 0, 0, 0, 0), PIXEL_MASK(1, 0, 0, 0, 0),
+                                         PIXEL_MASK(1, 1, 1, 1, 1)};
+
+static const uint8_t letter_N[HEIGHT] = {PIXEL_MASK(1, 0, 0, 0, 1), PIXEL_MASK(1, 1, 0, 0, 1),
+                                         PIXEL_MASK(1, 0, 1, 0, 1), PIXEL_MASK(1, 0, 0, 1, 1),
+                                         PIXEL_MASK(1, 0, 0, 0, 1)};
+
+static const uint8_t *letters[] = {letter_A, letter_S, letter_L, letter_A, letter_N};
+
+#define SLIDE_DELAY_MS 500 // Adjust this value to control the slide speed
+
+static void display_letter(const struct device *dev, const uint8_t *letter)
+{
+    // Slide the letter from right to left
+    for (int offset = 0; offset <= WIDTH; ++offset) {
+        memset(buf, 0, sizeof(buf));
+
+        // Copy the visible part of the letter to the buffer
+        for (int i = 0; i < HEIGHT; ++i) {
+            buf[i] = letter[i] << offset;
+        }
+
+        int ret = display_write(dev, 0, 0, &buf_desc, buf);
+        if (ret < 0) {
+            printk("display_write failed: %u/%d\n", __LINE__, ret);
+        }
+        k_sleep(K_MSEC(SLIDE_DELAY_MS));
+    }
+}
+
+static void update_block_5x5(const struct device *dev)
+{
+    for (size_t i = 0; i < sizeof(letters) / sizeof(letters[0]); ++i) {
+        display_letter(dev, letters[i]);
+    }
+}
+
+int main(void)
+{
+    printk("nRF LED matrix sample on %s\n", CONFIG_BOARD);
+
+    int ret;
+    const struct device *const dev = DEVICE_DT_GET_ONE(nordic_nrf_led_matrix);
+
+    if (!dev) {
+        printk("Display device not ready\n");
+        return 0;
+    }
+
+    display_get_capabilities(dev, &caps);
+    if (!(caps.supported_pixel_formats & PIXEL_FORMAT_MONO01)) {
+        printk("Expected pixel format not supported\n");
+        return 0;
+    }
+
+    ret = display_set_pixel_format(dev, PIXEL_FORMAT_MONO01);
+    if (ret < 0) {
+        printk("display_set_pixel_format failed: %u/%d\n", __LINE__, ret);
+    }
+
+    printk("Started\n");
+
+    for (;;) {
+        ret = display_set_brightness(dev, 0x7F);
+        if (ret < 0) {
+            printk("display_set_brightness failed: %u/%d\n", __LINE__, ret);
+        }
+
+        ret = display_blanking_off(dev);
+        if (ret < 0) {
+            printk("display_blanking_off failed: %u/%d\n", __LINE__, ret);
+        }
+
+        update_block_5x5(dev);
+    }
+
+    return 0;
+}
