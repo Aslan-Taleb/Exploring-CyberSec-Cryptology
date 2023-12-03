@@ -77,6 +77,7 @@ public class Server {
     }
 
     public boolean isAuthenticated() {
+        //false veut dire si elle n'existe pas ne la creer pas
         HttpSession session = request.getSession(false);
         return session != null && session.getAttribute("user") != null;
     }

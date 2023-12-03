@@ -12,7 +12,6 @@ public class Server {
 
     @POST
     @Path("/add")
-
     public String ajouterLivre(
             @FormParam("titre") String titre,
             @FormParam("auteur") String auteur,

@@ -1,48 +1,64 @@
-import socket  # Importation du module pour la gestion des sockets
-import struct  # Importation du module pour manipuler des données binaires
 import os
-MCAST_GRP =   '224.0.0.127'
-MCAST_PORT = 7182
-FORMAT = 'utf-8'
-# 1. Création de la structure pour rejoindre le groupe multicast
-#    - struct.pack() est utilisé pour créer une structure binaire.
-#    - "4sl" indique le format de la structure :
-#         - "4s" signifie qu'il y a un champ de 4 octets pour stocker une chaîne de caractères (adresse IP).
-#         - "l" signifie qu'il y a un champ de 4 octets pour stocker un entier long (interface réseau).
-#    - socket.inet_aton("224.0.0.127") convertit l'adresse IP "224.0.0.127" en format binaire.
-#    - socket.INADDR_ANY est une constante représentant "n'importe quelle" interface réseau.
-gestion_mcast = struct.pack("4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
-
-# 2. Configuration de la socket pour rejoindre le groupe multicast
-socket_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Création d'une socket UDP
-
-# Option de socket pour réutiliser l'adresse.
-# Permet de réutiliser l'adresse IP et le port même si la socket a été utilisée précédemment.
-socket_client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+import socket
+import sys
+import signal
 
 
-socket_client.bind((MCAST_GRP, MCAST_PORT))
-def send(msg):
-    message = msg.encode(FORMAT)
-    socket_client.sendto(message, (MCAST_GRP, MCAST_PORT))
+# Saisie du pseudo de l'utilisateur, encodé en UTF-8
+pseudo = bytes(input("Veuillez rentrer votre pseudo : "), "utf-8")
 
+# Définition du TSAP (Tuple Service Access Point)
+adresseServeur = "224.0.0.127"  # Adresse IP multicast pour le groupe
+numeroPort = 7182  # Numéro de port associé
+tsap = (adresseServeur, numeroPort)
 
-# Configuration de la socket pour rejoindre le groupe multicast spécifié.
-socket_client.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, gestion_mcast)
-print(f"[LISTENING] client is listening on {MCAST_GRP}:{MCAST_PORT}")
+# Création de la socket UDP
+maSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
 
-try:
-    pid = os.fork()
+# Utilisation du même port pour plusieurs sockets
+maSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+# Réglage d'options pour UDP
+gestionGroupe = bytes([int(x) for x in b"224.0.0.127".split(b".")] + [0] * 4)
+maSocket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, gestionGroupe)
+maSocket.setsockopt(
+    socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, 1
+)  # Mettre à 1 pour que les données reviennent sur la loopback et parviennent au serveur
+
+# Bind de la socket à l'adresse et au port spécifiés
+maSocket.bind(("", numeroPort))
+
+# Création d'un processus fils avec fork
+pid = os.fork()
+
+if pid > 0:
+    # On est dans le parent (processus serveur)
     while True:
-        if pid == 0:
-            user_input = input("\n\n\nYour Message : \n")
-            send(user_input)
-            
-        else:
-            data, addr = socket_client.recvfrom(1024)  # Recevoir des données multicast (jusqu'à 1024 octets)
-            # Afficher les données reçues en décodant en UTF-8 (supposant que les données sont en texte).
-            print("Données reçues de", addr, ":", data.decode("utf-8"))
-except KeyboardInterrupt:
-    print("Deconexion Client.")
-finally:
-    socket_client.close()  # Fermer la socket lorsque vous avez terminé
+        # Réception des messages
+        message, adresseSource = maSocket.recvfrom(1024)
+        messageStr = message.decode("utf-8")
+
+        print("Message recu:", messageStr)
+
+        # Si le message est "FIN", on arrête le serveur
+        if messageStr == "FIN":
+            break
+
+    # Envoi d'un signal SIGUSR1 au processus fils pour le terminer
+    os.kill(pid, signal.SIGUSR1)
+
+    # N’oublions pas de fermer la socket
+    maSocket.close()
+else:
+    # Gestion du signal SIGUSR1
+    def handlerSIGUSR1(signum, frame):
+        maSocket.close()
+        sys.exit(0)
+
+    signal.signal(signal.SIGUSR1, handlerSIGUSR1)
+
+    # On est dans le fils
+    while True:
+        # Saisie du message et envoi à la socket avec le pseudo
+        message = bytes(input(""), "utf-8")
+        maSocket.sendto(pseudo + b":" + message, tsap)

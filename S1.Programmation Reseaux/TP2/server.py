@@ -1,51 +1,42 @@
-# SENDER
+# Importation des modules nécessaires
+import os, socket, sys, signal, struct
 
-import socket
-import threading
+# Définition du TSAP (Transport Service Access Point)
+adresseServeur = "224.0.0.127"  # Adresse IP du serveur en mode multidiffusion
+numeroPort = 7182  # Numéro de port sur lequel le serveur écoutera les connexions
+tsap = (adresseServeur, numeroPort)  # Combinaison de l'adresse IP et du numéro de port
 
-MCAST_GRP =   '224.0.0.127'
-MCAST_PORT = 7182
-FORMAT = 'utf-8'
-SIZE = 1024
-DISCONNECTION = "!out"
-# 2-hop restriction in network
-ttl = 2
+# Création de la socket
+maSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+# La ligne suivante permet la réutilisation du même port pour plusieurs sockets
+maSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+# Configuration des options de la socket pour le protocole UDP
+gestionGroupe = struct.pack("4sl", socket.inet_aton("224.0.0.127"), socket.INADDR_ANY)
+# Elle indique à la socket de rejoindre le groupe multicast spécifié (224.0.0.127) et
+# d'accepter les messages provenant de n'importe quelle interface (INADDR_ANY).
+maSocket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, gestionGroupe)
+# Désactivation de la boucle de multidiffusion locale pour éviter une boucle infinie de réception
+maSocket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, 0)
+# Association de la socket à l'adresse IP et au port spécifiés
+maSocket.bind(("", numeroPort))
 
-socket_server = socket.socket(socket.AF_INET,
-                     socket.SOCK_DGRAM,
-                     socket.IPPROTO_UDP)
-socket_server.setsockopt(socket.IPPROTO_IP,
-                socket.IP_MULTICAST_TTL,
-                ttl)
+print("Serveur en attente de messages...")
 
-# Function to handle a client's connection
-def handle_client(conn, addr):
-    username = ""
-    print(f"[NEW CONNECTION] {username} connected.")
-    connected = True
-    while connected:
-        message = conn.recv(SIZE).decode(FORMAT)
-        if message == DISCONNECTION:
-            connected = False
-        elif message:    
-            print(f"[MESSAGE] {username} said: {message}.") 
-    conn.close() 
-    print(f"[DISCONNECTION] {username} disconnected.")
+# Boucle principale du serveur
+while 1:
+    # Réception d'un message (jusqu'à 1024 octets) et récupération de l'adresse source
+    message, adresseSource = maSocket.recvfrom(1024)
+    # Décodage du message en UTF-8
+    messageStr = message.decode("utf-8")
 
-def start():
-    print(f"[LISTENING] server is listening on {MCAST_GRP}:{MCAST_PORT}")
-    socket_server.sendto(b"[CadenaChat] Welcome !  ", (MCAST_GRP, MCAST_PORT))
-    try:
-        while True:
-            # For each connection, we retrieve the connection object and connection information
-            conn, addr = socket_server.recvfrom(SIZE)
-            # Create a thread to handle the connection and pass it to our handle_client function with the arguments
-            thread = threading.Thread(target=handle_client, args=(conn, addr))
-            thread.start()
-            # We subtract 1 because our server itself is running in a thread
-            print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
-    except KeyboardInterrupt:
-        print("Arrêt Serveur.")
-    
-print("[STARTING] server is starting...")
-start()
+    # Affichage du message reçu côté serveur
+    print("Message reçu : " + messageStr)
+    # Envoi du message à tous les clients connectés
+    maSocket.sendto(message, tsap)
+
+    # Condition de sortie de la boucle si le message est "FIN"
+    if messageStr == "FIN":
+        break
+
+# Fermeture de la socket à la fin de l'exécution
+maSocket.close()

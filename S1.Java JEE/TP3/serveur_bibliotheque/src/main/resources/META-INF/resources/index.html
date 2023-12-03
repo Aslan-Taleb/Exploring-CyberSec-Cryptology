@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation du Serveur</title>
+</head>
+<body>
+<h1>Serveur de Gestion de Livres</h1>
+
+<p>Bienvenue sur notre serveur de gestion de livres. Ce serveur expose plusieurs méthodes pour interagir avec la base de données de livres.</p>
+
+<h2>Ajouter un Livre</h2>
+<p>Utilisez la méthode POST pour ajouter un nouveau livre :</p>
+<pre>
+        POST /server/add
+        Parameters:
+        - titre (String)
+        - auteur (String)
+        - nbExemplaires (int)
+    </pre>
+
+<h2>Obtenir la Liste des Livres</h2>
+<p>Utilisez la méthode GET pour obtenir la liste complète des livres :</p>
+<pre>
+        GET /server/list
+    </pre>
+
+<h2>Rechercher un Livre par Titre</h2>
+<p>Utilisez la méthode GET avec le paramètre "titre" pour rechercher un livre par son titre :</p>
+<pre>
+        GET /server/search?titre={titre}
+    </pre>
+
+<h2>Mettre à Jour le Nombre d'Exemplaires</h2>
+<p>Utilisez la méthode POST pour mettre à jour le nombre d'exemplaires d'un livre :</p>
+<pre>
+        POST /server/update
+        Parameters:
+        - titre (String)
+        - nbExemplaires (int)
+    </pre>
+
+<h2>Supprimer un Livre</h2>
+<p>Utilisez la méthode POST pour supprimer un livre par son titre :</p>
+<pre>
+        POST /server/delete
+        Parameters:
+        - titre (String)
+    </pre>
+
+<p>N'oubliez pas de respecter le format des requêtes et de vérifier les réponses du serveur. Pour plus de détails sur l'utilisation de chaque méthode, consultez la documentation du code source.</p>
+</body>
+</html>

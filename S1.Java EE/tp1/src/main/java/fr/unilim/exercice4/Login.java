@@ -23,10 +23,12 @@
         public class Login extends HttpServlet {
             private final HashMap<String, String> accounts = new HashMap<>();
             private boolean isAuthenticated = false;
+            //Utilisation de la fonction "init" qui sera executer une seule fois au debut
+            //quand "/login" sera acceder pour la premiere fois
             @Override
             public void init(ServletConfig config) throws ServletException {
                 super.init(config);
-                // Access initialization parameters "usernameParam" and "passwordParam"
+                
                 String username = getServletConfig().getInitParameter("usernameParam");
                 String password = getServletConfig().getInitParameter("passwordParam");
                 // Initialize your "accounts" data structure with these values
